@@ -1,24 +1,8 @@
-# Configuration of Docker Compose
 version: '3'
-
-# (service = container)
 services:
   web:
-    build: 
+    build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - /app/node_modules
-      - .:/app
-
-# Service to run out test
-  test:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - .:/app
-    command: ["npm", "run", "test"]
+      - '80:80'
