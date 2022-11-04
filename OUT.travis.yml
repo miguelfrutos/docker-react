@@ -1,0 +1,29 @@
+
+# CI (Continous Integration)
+language: generic
+# Super User level permision
+sudo: required
+# Install a copy of docker
+services:
+  - docker
+# Set-up and build a our testing docker image from Dockerfile.dev
+before_install:
+  - docker build -t miguelfrutos/docker-react -f Dockerfile.dev .
+# Tell Travis how to run our test suite and exit (-e)
+script:
+  - docker run -e CI=true miguelfrutos/docker-react npm run test
+
+# READY TO DEPLOY
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'docker-react'
+  env: 'Dockerreact-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-619760814468'
+  bucket_path: 'docker-react'
+  on:
+    branch: main
+  
+  # AWS CREDENTIALS COMING FROM TRAVIS CI
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
