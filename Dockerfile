@@ -13,4 +13,5 @@ CMD ["npm", "run", "build"]
 FROM nginx
 # from other build phase and the folder /app/build
 # to /usr/share/nginx/html (documentation HUB Docker of nginx)
+EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
